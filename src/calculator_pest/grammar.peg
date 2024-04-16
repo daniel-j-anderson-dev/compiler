@@ -1,0 +1,18 @@
+Program = _{ SOI ~ Expression ~ EOF }
+
+Expression = { UnaryExpression | BinaryExpression | Term }
+
+Term = _{Integer | "(" ~ Expression ~ ")" }
+
+UnaryExpression = { Operator ~ Term }
+
+BinaryExpression = { Term ~ (Operator ~ Term)+ }
+
+Operator = { "+" | "-" | "*" | "/" | "%" }
+
+Integer = @{ Operator? ~ ASCII_DIGIT+ }
+
+WHITESPACE = _{ " " | "\t" }
+
+EOF = _{ EOI | ";" }
+    

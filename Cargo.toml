@@ -4,5 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+error_set = "0.3.2"
 pest = "2.7.9"
 pest_derive = "2.7.9"
+thiserror = "1.0.58"

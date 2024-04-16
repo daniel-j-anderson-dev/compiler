@@ -21,8 +21,10 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 name = "compiler"
 version = "0.1.0"
 dependencies = [
+ "error_set",
  "pest",
  "pest_derive",
+ "thiserror",
 ]
 
 [[package]]
@@ -52,6 +54,26 @@ checksum = "9ed9a281f7bc9b7576e61468ba615a66a5c8cfdff42420a70aa82701a3b1e292"
 dependencies = [
  "block-buffer",
  "crypto-common",
+]
+
+[[package]]
+name = "error_set"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1486579b4d961f6462e6919337a7d23e989d0cb8b80706a2c184fc2dfd4d7f81"
+dependencies = [
+ "error_set_impl",
+]
+
+[[package]]
+name = "error_set_impl"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "caa11d9b6429dad602895a2f5e6fccce0980f1e20d8ef15155d7dc8c13d8fef7"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]

@@ -1,5 +1,2 @@
-use pest_derive::Parser;
-
-#[derive(Parser)]
-#[grammar = "calculator.peg"]
-pub struct CalculatorParser;
+pub mod calculator_pest;
+pub mod calculator_scratch;

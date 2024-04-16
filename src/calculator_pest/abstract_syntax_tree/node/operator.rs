@@ -23,6 +23,20 @@ impl Operator {
         };
     }
 }
+impl TryFrom<char> for Operator {
+    type Error = ParseOperatorError;
+    fn try_from(value: char) -> Result<Self, Self::Error> {
+        return match value {
+            '+' => Ok(Operator::Add),
+            '-' => Ok(Operator::Subtract),
+            '*' => Ok(Operator::Multiply),
+            '/' => Ok(Operator::Divide),
+            '%' => Ok(Operator::Modulo),
+            '^' => Ok(Operator::Exponential),
+            _ => Err(ParseOperatorError::InvalidCharacter),
+        };
+    }
+}
 impl FromStr for Operator {
     type Err = ParseOperatorError;
     fn from_str(s: &str) -> Result<Self, Self::Err> {

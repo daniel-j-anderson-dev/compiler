@@ -1,6 +1,6 @@
 use crate::calculator_scratch::error::ParseError;
 
-use std::str::FromStr;
+use std::{ops::{Deref, DerefMut}, str::FromStr};
 
 pub enum TokenKind {
     Integer,
@@ -10,14 +10,16 @@ pub enum TokenKind {
     Whitespace,
 }
 
-pub struct RawToken<'a> {
-    value: &'a str,
-    kind: TokenKind,
+#[derive(Debug)]
+pub struct RawToken<'a>(pub &'a str);
+impl<'a> Deref for RawToken<'a> {
+    type Target = &'a str;
+    fn deref(&self) -> &&'a str {
+        return &self.0;
+    }
 }
-impl<'a> FromStr for RawToken<'a> {
-    type Err = ParseError;
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let chars = s.char_indices();
-        todo!();
+impl<'a> AsRef<str> for RawToken<'a> {
+    fn as_ref(&self) -> &'a str {
+        return self.0;
     }
 }

@@ -2,7 +2,7 @@ use std::fmt::{Debug, Display};
 
 use thiserror::Error;
 
-use crate::calculator_pest::grammar::Rule;
+use crate::grammar::Rule;
 
 #[derive(Debug, Error)]
 pub enum ParseNodeError {
@@ -24,10 +24,7 @@ pub enum ParseNodeError {
     ),
 
     #[error("{0}")]
-    ParseIntegerError(
-        #[source]
-        Either<std::num::ParseIntError, InvalidSignChar>,
-    ),
+    ParseIntegerError(#[source] Either<std::num::ParseIntError, InvalidSignChar>),
 
     #[error("Unimplemented Rule: {0:?}")]
     UnrecognizedRule(Rule),
@@ -43,7 +40,6 @@ impl From<InvalidSignChar> for ParseNodeError {
     }
 }
 
-
 #[derive(Debug, Error)]
 #[error("invalid sign char in Integer")]
 pub struct InvalidSignChar;
@@ -53,12 +49,9 @@ pub enum Either<L, R> {
     Left(
         #[source]
         #[from]
-        L
+        L,
     ),
-    Right(
-        #[source]
-        R
-    ),
+    Right(#[source] R),
 }
 impl<L: Debug, R: Debug> Debug for Either<L, R> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -78,10 +71,10 @@ impl<L: Display, R: Display> Display for Either<L, R> {
 }
 impl<L, R> Either<L, R> {
     pub fn left(value: L) -> Self {
-        return Self::Left(value)
+        return Self::Left(value);
     }
     pub fn right(value: R) -> Self {
-        return Self::Right(value)
+        return Self::Right(value);
     }
 }
 

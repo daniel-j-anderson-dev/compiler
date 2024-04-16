@@ -1,0 +1,27 @@
+```rust
+#[test]
+fn test_lexer() {
+    let source_code = "   1234 - (4 ^ 6) hello there!!!!";
+    for token in Lexer::new(source_code) {
+        println!("{:?}", token);
+    }
+}
+```
+---- calculator::test::test_lexer stdout ----
+Whitespace(3)
+Integer(1234)
+Whitespace(1)
+Operator(Subtract)
+Whitespace(1)
+OpenParenthesis
+Integer(4)
+Whitespace(1)
+Operator(Exponential)
+Whitespace(1)
+Integer(6)
+CloseParenthesis
+Whitespace(1)
+Alphabetic("hello")
+Whitespace(1)
+Alphabetic("there")
+Unrecognized("!!!!")

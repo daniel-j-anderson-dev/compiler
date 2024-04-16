@@ -1,3 +1,3 @@
 #[derive(pest_derive::Parser)]
-#[grammar = "src/calculator_pest/grammar.peg"]
+#[grammar = "grammar.peg"]
 pub struct CalculatorParser;

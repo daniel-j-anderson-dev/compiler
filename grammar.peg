@@ -8,7 +8,7 @@ UnaryExpression = { Operator ~ Term }
 
 BinaryExpression = { Term ~ (Operator ~ Term)+ }
 
-Operator = { "+" | "-" | "*" | "/" | "%" }
+Operator = { "+" | "-" | "*" | "/" | "%" | "^" }
 
 Integer = @{ Operator? ~ ASCII_DIGIT+ }
 

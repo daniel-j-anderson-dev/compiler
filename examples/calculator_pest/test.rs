@@ -61,8 +61,7 @@ mod tests {
         fn test_expr(expected: &str, src: &str) {
             assert_eq!(
                 expected,
-                src
-                    .parse::<AbstractSyntaxTree>()
+                src.parse::<AbstractSyntaxTree>()
                     .unwrap()
                     .iter()
                     .fold(String::new(), |acc, arg| acc + &format!("{}", &arg))

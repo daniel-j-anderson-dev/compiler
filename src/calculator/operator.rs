@@ -1,6 +1,6 @@
 use std::{fmt::Display, str::FromStr};
 
-use crate::calculator_pest::ParseOperatorError;
+pub use crate::calculator::error::*;
 
 #[derive(Debug, PartialEq)]
 pub enum Operator {
@@ -12,7 +12,7 @@ pub enum Operator {
     Exponential,
 }
 impl Operator {
-    fn as_char(&self) -> char {
+    pub fn as_char(&self) -> char {
         return match self {
             Operator::Add => '+',
             Operator::Subtract => '-',
@@ -23,8 +23,13 @@ impl Operator {
         };
     }
 }
+impl Display for Operator {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        return write!(f, "{}", self.as_char());
+    }
+}
 impl TryFrom<char> for Operator {
-    type Error = ParseOperatorError;
+    type Error = ParseError;
     fn try_from(value: char) -> Result<Self, Self::Error> {
         return match value {
             '+' => Ok(Operator::Add),
@@ -33,26 +38,21 @@ impl TryFrom<char> for Operator {
             '/' => Ok(Operator::Divide),
             '%' => Ok(Operator::Modulo),
             '^' => Ok(Operator::Exponential),
-            _ => Err(ParseOperatorError::InvalidCharacter),
+            _ => Err(ParseOperatorError::InvalidCharacter)?,
         };
     }
 }
 impl FromStr for Operator {
-    type Err = ParseOperatorError;
+    type Err = ParseError;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        return match s {
-            "+" => Ok(Operator::Add),
-            "-" => Ok(Operator::Subtract),
-            "*" => Ok(Operator::Multiply),
-            "/" => Ok(Operator::Divide),
-            "%" => Ok(Operator::Modulo),
-            "^" => Ok(Operator::Exponential),
-            _ => Err(ParseOperatorError::InvalidCharacter),
-        };
-    }
-}
-impl Display for Operator {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        return write!(f, "{}", self.as_char());
+        if s.is_empty() {
+            Err(ParseOperatorError::EmptyString)?;
+        }
+
+        if s.len() > 1 {
+            Err(ParseOperatorError::TooLong)?;
+        }
+
+        return s.chars().next().expect("s is not empty").try_into();
     }
 }

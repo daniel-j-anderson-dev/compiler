@@ -1,2 +1,3 @@
-pub mod calculator_pest;
-pub mod calculator_scratch;
+pub mod calculator;
+
+pub use macros::*;

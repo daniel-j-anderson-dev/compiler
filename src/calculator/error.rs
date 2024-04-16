@@ -5,6 +5,8 @@ error_set!(
         ParseInteger(std::num::ParseIntError),
     } || ParseOperatorError;
     ParseOperatorError = {
-        InvalidCharacter
+        InvalidCharacter,
+        EmptyString,
+        TooLong,
     };
 );

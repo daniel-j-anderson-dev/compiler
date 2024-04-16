@@ -1,10 +1,17 @@
+[workspace]
+members = ["macros"]
+
 [package]
 name = "compiler"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+either = "1.11.0"
 error_set = "0.3.2"
+macros = { path = "./macros"}
+
+[dev-dependencies]
+thiserror = "1.0.58"
 pest = "2.7.9"
 pest_derive = "2.7.9"
-thiserror = "1.0.58"

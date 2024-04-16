@@ -3,9 +3,7 @@ pub use operator::Operator;
 
 use std::fmt::Display;
 
-use crate::calculator_pest::{
-    error::ParseNodeError, grammar::Rule, InvalidSignChar,
-};
+use crate::{error::ParseNodeError, grammar::Rule, InvalidSignChar};
 
 type Pair<'a> = pest::iterators::Pair<'a, Rule>;
 

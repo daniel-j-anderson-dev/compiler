@@ -28,11 +28,11 @@ impl<'a> Lexer<'a> {
         let mut chars = self.content.char_indices();
         let mut token_end = 0;
         while let Some((index, character)) = chars.next() {
-            token_end = index;
-            
             if !token_definition(character) {
                 break;
             }
+
+            token_end += 1;
         }
         return token_end;
     }

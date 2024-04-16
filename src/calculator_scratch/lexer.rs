@@ -25,15 +25,16 @@ impl<'a> Lexer<'a> {
     }
 
     fn find_uniform_token_end(&self, token_definition: impl Fn(char) -> bool) -> usize {
-        let mut chars = self.content.char_indices();
         let mut token_end = 0;
-        while let Some((index, character)) = chars.next() {
+
+        for character in self.content.chars() {
             if !token_definition(character) {
                 break;
             }
 
             token_end += 1;
         }
+
         return token_end;
     }
 

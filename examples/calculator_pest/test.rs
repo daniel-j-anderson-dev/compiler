@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use crate::calculator_pest::*;
+    use crate::*;
 
     #[test]
     fn basics() {

@@ -10,9 +10,9 @@ BinaryExpression = { Term ~ (Operator ~ Term)+ }
 
 Operator = { "+" | "-" | "*" | "/" | "%" | "^" }
 
-Integer = @{ Operator? ~ ASCII_DIGIT+ }
+Integer = @{ "-"? ~ ASCII_DIGIT+ }
 
-WHITESPACE = _{ " " | "\t" }
+WHITESPACE = _{ " " | "\t" | "\0" | "\n" }
 
 EOF = _{ EOI | ";" }
     

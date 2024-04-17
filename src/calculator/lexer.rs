@@ -3,6 +3,15 @@ pub use token::{RawToken, Token};
 
 use super::Operator;
 
+pub trait Tokenize<'a> {
+    fn tokenize(&'a self) -> Lexer<'a>;
+}
+impl<'a, T: AsRef<str>> Tokenize<'a> for T {
+    fn tokenize(&'a self) -> Lexer<'a> {
+        return Lexer::new(self.as_ref());
+    }
+}
+
 pub struct Lexer<'a> {
     content: &'a str,
 }
@@ -53,32 +62,25 @@ impl<'a> Iterator for Lexer<'a> {
     fn next(&mut self) -> Option<Self::Item> {
         let first_character = self.first_char()?;
 
-        let token =
-        if first_character.is_whitespace() {
+        let token = if first_character.is_whitespace() {
             let raw_token = self.cut_uniform_token(Self::is_whitespace);
             Token::Whitespace(raw_token.len())
-        }
-        else if first_character.is_numeric() {
+        } else if first_character.is_numeric() {
             let raw_token = self.cut_uniform_token(char::is_numeric);
             Token::Integer(raw_token.parse().expect("only numeric chars"))
-        }
-        else if let Ok(operator) = Operator::try_from(first_character) {
+        } else if let Ok(operator) = Operator::try_from(first_character) {
             let _raw_token = self.cut(1);
             Token::Operator(operator)
-        }
-        else if first_character.is_alphabetic() {
+        } else if first_character.is_alphabetic() {
             let raw_token = self.cut_uniform_token(char::is_alphabetic);
             Token::Alphabetic(raw_token.to_owned())
-        }
-        else if first_character == '(' {
+        } else if first_character == '(' {
             let _raw_token = self.cut(1);
             Token::OpenParenthesis
-        }
-        else if first_character == ')' {
+        } else if first_character == ')' {
             let _raw_token = self.cut(1);
             Token::CloseParenthesis
-        }
-        else {
+        } else {
             let raw_token = self.cut_uniform_token(Self::is_unrecognized);
             Token::Unrecognized(raw_token.to_owned())
         };

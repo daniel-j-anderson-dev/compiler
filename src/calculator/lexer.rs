@@ -7,7 +7,7 @@ pub struct Lexer<'a> {
     content: &'a str,
 }
 impl<'a> Lexer<'a> {
-    pub fn new(source_code: &'a str) -> Self {
+    pub const fn new(source_code: &'a str) -> Self {
         return Self {
             content: source_code,
         };
@@ -27,18 +27,21 @@ impl<'a> Lexer<'a> {
 
     fn find_uniform_token_end(&self, predicate: impl Fn(char) -> bool) -> usize {
         let mut token_end = 0;
-        for character in self.content.chars() {
+        for (character_index, character) in self.content.char_indices() {
             if !predicate(character) {
                 break;
             }
-
-            token_end += 1;
+            token_end = character_index + 1;
         }
         return token_end;
     }
 
     fn first_char(&self) -> Option<char> {
         return self.content.chars().next();
+    }
+
+    fn is_whitespace(c: char) -> bool {
+        return c.is_whitespace() || c == '\0';
     }
 
     fn is_unrecognized(c: char) -> bool {
@@ -52,7 +55,7 @@ impl<'a> Iterator for Lexer<'a> {
 
         let token =
         if first_character.is_whitespace() {
-            let raw_token = self.cut_uniform_token(char::is_whitespace);
+            let raw_token = self.cut_uniform_token(Self::is_whitespace);
             Token::Whitespace(raw_token.len())
         }
         else if first_character.is_numeric() {

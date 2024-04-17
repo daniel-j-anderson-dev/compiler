@@ -7,8 +7,8 @@ use super::*;
 #[test]
 fn lexer() {
     const SOURCE_CODE: &str = "   abc123+-*/%^()!@#$😀&";
-    let mut lexer = Lexer::new(SOURCE_CODE);
-    
+    let mut lexer = SOURCE_CODE.tokenize();
+
     assert_eq!(lexer.next(), Some(Token::Whitespace(3)));
     assert_eq!(lexer.next(), Some(Token::Alphabetic("abc".to_owned())));
     assert_eq!(lexer.next(), Some(Token::Integer(123)));
@@ -20,13 +20,16 @@ fn lexer() {
     assert_eq!(lexer.next(), Some(Token::Operator(Operator::Exponential)));
     assert_eq!(lexer.next(), Some(Token::OpenParenthesis));
     assert_eq!(lexer.next(), Some(Token::CloseParenthesis));
-    assert_eq!(lexer.next(), Some(Token::Unrecognized("!@#$😀&".to_owned())));
+    assert_eq!(
+        lexer.next(),
+        Some(Token::Unrecognized("!@#$😀&".to_owned()))
+    );
 }
 
 #[test]
 fn lexer_whitespace() {
     const SOURCE_CODE: &str = "\n \0 \n";
-    assert_eq!(Lexer::new(SOURCE_CODE).next(), Some(Token::Whitespace(5)));
+    assert_eq!(SOURCE_CODE.tokenize().next(), Some(Token::Whitespace(5)));
 }
 
 #[test]

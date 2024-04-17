@@ -1,7 +1,8 @@
 pub mod node;
+pub use node::*;
+
 use std::str::FromStr;
 
-use node::Node;
 
 use crate::calculator::{ParseError, Tokenize};
 

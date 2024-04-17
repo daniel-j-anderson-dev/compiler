@@ -4,4 +4,4 @@ pub mod operator;
 pub mod parser;
 pub mod test;
 
-pub use self::{lexer::*, operator::*};
+pub use self::{lexer::*, operator::*, parser::*};

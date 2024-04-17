@@ -3,10 +3,15 @@ use error_set::error_set;
 error_set!(
     ParseError = {
         ParseInteger(std::num::ParseIntError),
-    } || ParseOperatorError;
+    } || ParseOperatorError || ParseAbstractSyntaxTreeError;
     ParseOperatorError = {
         InvalidCharacter,
         EmptyString,
         TooLong,
+    };
+    ParseAbstractSyntaxTreeError = {
+        MissingCloseParenthesis,
+        MissingOpenParenthesis,
+        
     };
 );
